@@ -4,6 +4,7 @@ __pycache__/
 
 #Virtualenv
 .ned/
+iPod/
 
 # C extensions
 *.so

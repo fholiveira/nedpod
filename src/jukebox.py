@@ -20,4 +20,3 @@ class Jukebox:
 
             lang = self.speaker.discover_language(song.title, song.album)
             self.speaker.record(song.title, language=lang).save(speach)
-

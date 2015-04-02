@@ -14,7 +14,7 @@ class Speaker:
         lang = max(candidates, key=candidates.get)
 
         delta = candidates.get(lang) - (candidates.get(self.preferred_language) or 0)
-        if delta < 0.1:
+        if delta < 0.15:
             return self.preferred_language
 
         return lang

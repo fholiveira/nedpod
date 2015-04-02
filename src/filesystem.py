@@ -30,7 +30,7 @@ class FileSystem:
 
         foldername = self.build_filename(playlist.name)
 
-        song_file = join(self.songs_path, foldername, filename)
+        song_file = join(self.songs_path, foldername, filename) + extension
         speach_file = join(self.speakables_path, foldername, filename) + '.mp3'
 
         return (song_file, speach_file)
