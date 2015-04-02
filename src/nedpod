@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+"""
+nedPod
+
+Usage:
+  nedPod <playlist> -o FOLDER [--language=<lang>]
+  nedPod (-h | --help)
+  nedPod --version 
+
+Options:
+  -o FOLDER             Directory to put output files 
+  --language=<lang>     Preferred language for Voice Over [default: en]
+  -h --help             Show this screen.
+   --version            Show version.
+
+"""
+from playlist import Playlist
+from jukebox import Jukebox
+from speaker import Speaker
+from docopt import docopt
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__, version='nedPod 0.1')
+
+    playlist = Playlist(arguments['<playlist>'])
+    speaker = Speaker(arguments['--language'])
+   
+    recorder = Jukebox(speaker, arguments['-o'])
+    recorder.write_playlist(playlist)

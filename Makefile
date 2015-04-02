@@ -8,7 +8,7 @@ ACTIVE_VENV=. $(VENV)/bin/activate
 all: run
 
 run: 
-	@$(ACTIVE_VENV) && $(PYTHON) src/app.py
+	@$(ACTIVE_VENV) && $(PYTHON) src/nedpod
 
 test:
 	@cd tests && $(MAKE)
