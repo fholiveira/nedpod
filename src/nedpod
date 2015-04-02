@@ -9,10 +9,9 @@ Usage:
 
 Options:
   -o FOLDER             Directory to put output files 
-  --language=<lang>     Preferred language for Voice Over [default: en]
+  --language=<lang>     Preferred language for Voice Over [default: en].
   -h --help             Show this screen.
    --version            Show version.
-
 """
 from playlist import Playlist
 from jukebox import Jukebox

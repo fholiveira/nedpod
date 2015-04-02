@@ -1,32 +1,75 @@
-from os.path import splitext
+from os.path import splitext, basename
 from mutagen.id3 import ID3
 from mutagen.mp4 import MP4
+import logging
 
 
-class Mp3Song:
+class Music:
     def __init__(self, filename):
         self.filename = filename
+        self.title, self.album = self.load_audio_info()
         
-        tag = ID3(filename)
-        album = tag.get('TAL')
+    def load_audio_info(self):
+        title, album = (splitext(basename(self.filename))[0] , '')
 
-        self.title = ', '.join(tag['TIT2'].text)
-        self.album = ', '.join(album.text if album else '')
+        try:
+            tags = self._get_tags()
 
-class M4aSong:
-    def __init__(self, filename):
-        self.filename = filename
+            title = self._get_title(tags)
+            album = self._get_album(tags)
+        except:
+            logging.error("The music file {path} does not have audio tags.".format(path=self.filename))
 
-        tag = MP4(filename)
-        self.title = ', '.join(tag['\xa9nam'])
-        self.album = ', '.join(tag['\xa9alb'])
+        return (title, album)
+
+
+class Mp3Music(Music):
+    def _get_tags(self):
+        return ID3(self.filename)
+
+    def _get_title(self, tags):
+        try:
+            return ', '.join(tags['TIT2'].text)
+        except:
+            logging.error('Could not find the music title in the file "{path}".'.format(path=self.filename))
+
+        return splitext(basename(self.filename))[0]
+        
+    def _get_album(self, tags):
+        try:
+            return ', '.join(tags['TAL'].text)
+        except:
+            logging.error('Could not find the music album title in the file "{path}".'.format(path=self.filename))
+
+        return ''
+
+
+class M4aMusic(Music):
+    def _get_tags(self):
+        return MP4(self.filename)
+
+    def _get_title(self, tags):
+        try:
+            return ', '.join(tags['\xa9nam'])
+        except:
+            logging.error('Could not find the music title in the file "{path}".'.format(path=self.filename))
+
+        return splitext(basename(self.filename))[0]
+        
+    def _get_album(self, tags):
+        try:
+            return ', '.join(tags['\xa9alb'])
+        except:
+            logging.error('Could not find the music album title in the file "{path}".'.format(path=self.filename))
+
+        return ''
 
 
 def load_song(filename):
     extension = splitext(filename)[1]
 
     if extension == '.mp3':
-        return Mp3Song(filename)
+        return Mp3Music(filename)
 
     if extension == '.m4a':
-        return M4aSong(filename)
+        return M4aMusic(filename)

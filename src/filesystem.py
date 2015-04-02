@@ -1,5 +1,5 @@
 from os.path import join, abspath
-from song import Mp3Song
+from song import Mp3Music
 from os import makedirs
 from shutil import copy
 from re import sub
@@ -25,7 +25,7 @@ class FileSystem:
         return (folder, speach + '.mp3')
 
     def create_song(self, playlist, song):
-        extension = '.mp3' if isinstance(song, Mp3Song) else '.m4a' 
+        extension = '.mp3' if isinstance(song, Mp3Music) else '.m4a' 
         filename = self.build_filename(song.title)
 
         foldername = self.build_filename(playlist.name)
