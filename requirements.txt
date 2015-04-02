@@ -1,0 +1,4 @@
+guess-language-spirit==0.5.1
+langdetect==1.0.5
+mutagen==1.28
+six==1.9.0
